@@ -1,0 +1,19 @@
+import sys
+if(len(sys.argv)!=6):
+   print("Provide Input File and Output Directory")
+   sys.exit(0)
+from pyspark import SparkContext
+sc =SparkContext()
+f = sc.textFile(sys.argv[1])
+temp=f.map(lambda x: (x.split(',')[11],float(x.split(',')[8])))
+mag=temp.reduceByKey(lambda a,b:a if a>b else b)
+mag.saveAsTextFile(sys.argv[2]);
+temp=f.map(lambda x: (x.split(',')[11],float(x.split(',')[9])))
+dep=temp.reduceByKey(lambda a,b:a if a>b else b)
+dep.saveAsTextFile(sys.argv[3]);
+temp=f.map(lambda x: (x.split(',')[11],float(x.split(',')[6])))
+lat=temp.reduceByKey(lambda a,b:a if a>b else b)
+lat.saveAsTextFile(sys.argv[4]);
+temp=f.map(lambda x: (x.split(',')[11],float(x.split(',')[7])))
+longi=temp.reduceByKey(lambda a,b:a if a>b else b)
+longi.saveAsTextFile(sys.argv[5]);

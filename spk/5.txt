@@ -1,0 +1,13 @@
+Filter : 
+
+student_details = LOAD 'student_details.txt' USING PigStorage(',') as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray);
+filter_data = FILTER student_details BY city == 'Bangalore';
+Dump filter_data;
+
+
+Group :
+
+student = LOAD 'student_details.txt' USING PigStorage(',') as (id:int, firstname:chararray,
+lastname:chararray, age:int, phone:chararray, city:chararray);
+group_data = GROUP student BY age;
+Dump group_data;
